@@ -40,4 +40,10 @@
       } else {
         alert("Неверные данные для входа.");
       }
-    }
+
+        
+  document.getElementById("recoverLink").addEventListener("click", function () {
+    document.getElementById("recoverySection").style.display = "block";
+    document.getElementById("loginForm").style.display = "none"; // или registrationForm
+  });
+
