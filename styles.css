@@ -1,0 +1,76 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #2d253c, #0f080f);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #efeae7;
+}
+
+p, h1, h2, h3, label {
+  color: #efeae7;
+}
+
+button {
+  background-color: #4b3d4c;
+  color: #efeae7;
+  border: 2px solid #cec3c1;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: transparent;
+  color: #efeae7;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: none;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  background-color: #cec3c1;
+  color: #0f080f;
+}
+
+::placeholder {
+  color: #0f080f;
+}
+
+.chat-input {
+  background-color: #2d253c;
+  color: #efeae7;
+}
+
+.chat-box {
+  background-color: #2d253c;
+  color: #efeae7;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.burger-menu {
+  background-color: #2d253c;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.icon-placeholder {
+  background-color: #cec3c1;
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+}
