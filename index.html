@@ -19,9 +19,7 @@
       <button class="btn-secondary" onclick="showRegistration()">Регистрация</button>
     </div>
 
-    <div class="forgot-password">
-        Не помнишь пароль? <a href="password-reset.html">Восстановить</a>
-      </div>
+<p style="color: #75616a;">Не помнишь пароль? <span id="recoverLink" style="color: #efeae7; cursor: pointer;">Восстановить</span></p>
 
     <div id="register-form" class="hidden">
       <input type="text" placeholder="Имя пользователя" id="reg-name" />
@@ -33,19 +31,19 @@
       <button class="btn-secondary" onclick="showLogin()">Назад</button>
     </div>
 
-    <div id="reset-form">
-      <div class="message">
-        Введите email, указанный при регистрации, и мы вышлем ссылку для сброса пароля
-      </div>
-      
-      <input type="email" placeholder="Ваш email" id="reset-email" />
-      <button class="btn-primary" onclick="sendResetLink()">Отправить ссылку</button>
-      <button class="btn-secondary" onclick="window.location.href='index.html'">Назад</button>
-      
-      <div id="success-message" class="success-message">
-        Ссылка для восстановления отправлена на ваш email!
-      </div>
+    <div id="recoverySection" style="display: none;">
+      <h3>Восстановление пароля</h3>
+      <label for="recoveryPhone">Номер телефона:</label>
+      <input type="tel" id="recoveryPhone" name="recoveryPhone" placeholder="+375XXXXXXXXX">
+      <button onclick="sendRecoveryCode()">Отправить код</button>
+      <br><br>
+      <label for="recoveryCode">Код из СМС:</label>
+      <input type="text" id="recoveryCode" name="recoveryCode" placeholder="123456">
+      <button onclick="verifyRecoveryCode()">Войти</button>
+      <br><br>
+      <button onclick="goBackToLogin()">Назад</button>
     </div>
+   
   </div>
 
 <script src="scripts.js"></script>
