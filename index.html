@@ -15,8 +15,8 @@
     <div id="login-form">
       <input type="text" placeholder="E-mail или телефон" id="login-user" />
       <input type="password" placeholder="Пароль" id="login-password" />
-      <button class="btn-primary" onclick="login()">ВОЙТИ</button>
-      <button class="btn-secondary" onclick="showRegistration()">Регистрация</button>
+      <button class="btn-primary" id="loginBtn">ВОЙТИ</button>
+      <button class="btn-secondary" id="showRegisterBtn">Регистрация</button>
     </div>
 
 <p style="color: #75616a;">Не помнишь пароль? <span id="recoverLink" style="color: #efeae7; cursor: pointer;">Восстановить</span></p>
@@ -27,21 +27,21 @@
       <input type="email" placeholder="E-mail" id="reg-email" />
       <input type="password" placeholder="Придумай пароль" id="reg-password" />
       <input type="password" placeholder="Повтори пароль" id="reg-password-repeat" />
-      <button class="btn-primary" onclick="register()">ЗАРЕГИСТРИРОВАТЬСЯ</button>
-      <button class="btn-secondary" onclick="showLogin()">Назад</button>
+      <button class="btn-primary" id="registerBtn">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+      <button class="btn-secondary" id="showLoginBtn">Назад</button>
     </div>
 
     <div id="recoverySection" style="display: none;">
       <h3>Восстановление пароля</h3>
       <label for="recoveryPhone">Номер телефона:</label>
       <input type="tel" id="recoveryPhone" name="recoveryPhone" placeholder="+375XXXXXXXXX">
-      <button onclick="sendRecoveryCode()">Отправить код</button>
+      <button id="sendCodeBtn">Отправить код</button>
       <br><br>
       <label for="recoveryCode">Код из СМС:</label>
       <input type="text" id="recoveryCode" name="recoveryCode" placeholder="123456">
-      <button onclick="verifyRecoveryCode()">Войти</button>
+      <button id="verifyCodeBtn">Войти</button>
       <br><br>
-      <button onclick="goBackToLogin()">Назад</button>
+      <button id="backFromRecoveryBtn">Назад</button>
     </div>
  </div>
   
