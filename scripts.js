@@ -3,37 +3,26 @@ document.addEventListener("DOMContentLoaded", function () {
   const registerForm = document.getElementById("register-form");
   const recoverySection = document.getElementById("recoverySection");
 
-  // Переключение форм
-  window.showRegistration = function () {
+  // Показываем формы
+  function showRegistration() {
     loginForm.classList.add("hidden");
     registerForm.classList.remove("hidden");
     recoverySection.style.display = "none";
-  };
-
-  window.showLogin = function () {
-    registerForm.classList.add("hidden");
-    loginForm.classList.remove("hidden");
-    recoverySection.style.display = "none";
-  };
-
-  window.goBackToLogin = function () {
-    recoverySection.style.display = "none";
-    loginForm.classList.remove("hidden");
-    registerForm.classList.add("hidden");
-  };
-
-  // Обработчик "Восстановить"
-  const recoverLink = document.getElementById("recoverLink");
-  if (recoverLink) {
-    recoverLink.addEventListener("click", function () {
-      loginForm.classList.add("hidden");
-      registerForm.classList.add("hidden");
-      recoverySection.style.display = "block";
-    });
   }
 
-  // Регистрация
-  window.register = function () {
+  function showLogin() {
+    registerForm.classList.add("hidden");
+    loginForm.classList.remove("hidden");
+    recoverySection.style.display = "none";
+  }
+
+  function goBackToLogin() {
+    recoverySection.style.display = "none";
+    loginForm.classList.remove("hidden");
+    registerForm.classList.add("hidden");
+  }
+
+  function register() {
     const name = document.getElementById("reg-name").value;
     const phone = document.getElementById("reg-phone").value;
     const email = document.getElementById("reg-email").value;
@@ -49,13 +38,11 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.setItem("user", JSON.stringify(user));
     alert("Регистрация прошла успешно!");
     showLogin();
-  };
+  }
 
-  // Вход
-  window.login = function () {
+  function login() {
     const emailOrPhone = document.getElementById("login-user").value;
     const password = document.getElementById("login-password").value;
-
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (
@@ -68,10 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       alert("Неверные данные для входа.");
     }
-  };
+  }
 
-  // Восстановление пароля – эмуляция
-  window.sendRecoveryCode = function () {
+  function sendRecoveryCode() {
     const phone = document.getElementById("recoveryPhone").value;
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -80,9 +66,9 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       alert("Пользователь с таким номером не найден.");
     }
-  };
+  }
 
-  window.verifyRecoveryCode = function () {
+  function verifyRecoveryCode() {
     const code = document.getElementById("recoveryCode").value;
 
     if (code === "123456") {
@@ -91,10 +77,23 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       alert("Неверный код.");
     }
-  };
+  }
 
-  function goBackToLogin() {
-  document.getElementById('recoverySection').style.display = "none";
-  document.getElementById('login-form').classList.remove('hidden');
-}
+  // Обработчики кнопок
+  document.getElementById("showRegisterBtn").addEventListener("click", showRegistration);
+  document.getElementById("showLoginBtn").addEventListener("click", showLogin);
+  document.getElementById("loginBtn").addEventListener("click", login);
+  document.getElementById("registerBtn").addEventListener("click", register);
+  document.getElementById("sendCodeBtn").addEventListener("click", sendRecoveryCode);
+  document.getElementById("verifyCodeBtn").addEventListener("click", verifyRecoveryCode);
+  document.getElementById("backFromRecoveryBtn").addEventListener("click", goBackToLogin);
+
+  const recoverLink = document.getElementById("recoverLink");
+  if (recoverLink) {
+    recoverLink.addEventListener("click", function () {
+      loginForm.classList.add("hidden");
+      registerForm.classList.add("hidden");
+      recoverySection.style.display = "block";
+    });
+  }
 });
