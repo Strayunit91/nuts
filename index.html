@@ -32,6 +32,20 @@
       <button class="btn-primary" onclick="register()">ЗАРЕГИСТРИРОВАТЬСЯ</button>
       <button class="btn-secondary" onclick="showLogin()">Назад</button>
     </div>
+
+        <h2 style="color: #efeae7; margin-bottom: 20px;">Восстановление пароля</h2>
+    
+    <div id="reset-form">
+      <div class="message">
+        Введите email, указанный при регистрации, и мы вышлем ссылку для сброса пароля
+      </div>
+      
+      <input type="email" placeholder="Ваш email" id="reset-email" />
+      <button class="btn-primary" onclick="sendResetLink()">Отправить ссылку</button>
+      <button class="btn-secondary" onclick="window.location.href='index.html'">Назад</button>
+      
+      <div id="success-message" class="success-message">
+        Ссылка для восстановления отправлена на ваш email!
   </div>
 
   <script>
