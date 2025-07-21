@@ -92,4 +92,9 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Неверный код.");
     }
   };
+
+  function goBackToLogin() {
+  document.getElementById('recoverySection').style.display = "none";
+  document.getElementById('login-form').classList.remove('hidden');
+}
 });
