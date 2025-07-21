@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Creative Assistant</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #2d253c, #0f080f);
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 320px;
+      background-color: transparent;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      background-color: #cec3c1;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+
+    .btn-primary {
+      background-color: #4b3d4c;
+      color: #efeae7;
+      font-weight: bold;
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      border: 1px solid #cec3c1;
+      color: #efeae7;
+    }
+
+    .forgot-password {
+      margin-top: 15px;
+      color: #75616a;
+      font-size: 14px;
+    }
+    
+    .forgot-password a {
+      color: #efeae7;
+      text-decoration: none;
+      margin-left: 5px;
+    }
+    
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="logo1.png" alt="logo" class="logo" />
+
+    <div id="login-form">
+      <input type="text" placeholder="E-mail или телефон" id="login-user" />
+      <input type="password" placeholder="Пароль" id="login-password" />
+      <button class="btn-primary" onclick="login()">ВОЙТИ</button>
+      <button class="btn-secondary" onclick="showRegistration()">Регистрация</button>
+    </div>
+
+    <div class="forgot-password">
+        Не помнишь пароль? <a href="password-reset.html">Восстановить</a>
+      </div>
+
+    <div id="register-form" class="hidden">
+      <input type="text" placeholder="Имя пользователя" id="reg-name" />
+      <input type="text" placeholder="Телефон" id="reg-phone" />
+      <input type="email" placeholder="E-mail" id="reg-email" />
+      <input type="password" placeholder="Придумай пароль" id="reg-password" />
+      <input type="password" placeholder="Повтори пароль" id="reg-password-repeat" />
+      <button class="btn-primary" onclick="register()">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+      <button class="btn-secondary" onclick="showLogin()">Назад</button>
+    </div>
+  </div>
+
+  <script>
+    function showRegistration() {
+      document.getElementById('login-form').classList.add('hidden');
+      document.getElementById('register-form').classList.remove('hidden');
+    }
+
+    function showLogin() {
+      document.getElementById('register-form').classList.add('hidden');
+      document.getElementById('login-form').classList.remove('hidden');
+    }
+
+    function register() {
+      const name = document.getElementById('reg-name').value;
+      const phone = document.getElementById('reg-phone').value;
+      const email = document.getElementById('reg-email').value;
+      const password = document.getElementById('reg-password').value;
+      const repeat = document.getElementById('reg-password-repeat').value;
+
+      if (password !== repeat) {
+        alert("Пароли не совпадают!");
+        return;
+      }
+
+      const user = { name, phone, email, password };
+      localStorage.setItem('user', JSON.stringify(user));
+      alert("Регистрация прошла успешно!");
+
+      showLogin();
+    }
+
+    function login() {
+      const emailOrPhone = document.getElementById('login-user').value;
+      const password = document.getElementById('login-password').value;
+
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      if (user && (user.email === emailOrPhone || user.phone === emailOrPhone) && user.password === password) {
+      window.location.href = "main-menu.html";
+        alert("Вход выполнен!");
+        // Здесь можно редирект или запуск основного функционала
+      } else {
+        alert("Неверные данные для входа.");
+      }
+    }
+  </script>
+</body>
+</html>
