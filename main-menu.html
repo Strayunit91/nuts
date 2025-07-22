@@ -4,6 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Creative Assistant</title>
+   <link rel="stylesheet" href="styles.css">
+   <link rel="stylesheet" href="index.css">
 
   <script>
   // Проверяем, есть ли данные пользователя
@@ -12,116 +15,6 @@
   }
 </script>
   
-  <title>Главное меню | Creative Assistant</title>
-  <style>
-    body {
-      background: linear-gradient(to bottom, #2d253c, #0f080f);
-      font-family: sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    /* Бургер меню */
-    .sidebar {
-      width: 0;
-      height: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background-color: #2d253c;
-      overflow-x: hidden;
-      transition: 0.5s;
-      padding-top: 60px;
-      z-index: 100;
-    }
-
-    .sidebar a {
-      padding: 15px 25px;
-      text-decoration: none;
-      font-size: 16px;
-      color: #cec3c1;
-      display: block;
-      transition: 0.3s;
-    }
-
-    .sidebar a:hover {
-      color: #efeae7;
-      background-color: #2d253c;
-    }
-
-    .sidebar .logout {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      border-top: 1px solid #4b3d4c;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 0;
-      right: 25px;
-      font-size: 36px;
-      margin-left: 50px;
-      color: #cec3c1;
-      cursor: pointer;
-    }
-
-    .burger-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      font-size: 30px;
-      cursor: pointer;
-      color: #cec3c1;
-      z-index: 10;
-    }
-
-    /* Основной контент */
-    .main-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      transition: margin-left 0.5s;
-      padding: 20px;
-    }
-
-    .menu-btn {
-      width: 100%;
-      max-width: 280px;
-      padding: 15px;
-      margin: 15px 0;
-      border-radius: 10px;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .btn-primary {
-      background-color: #4b3d4c;
-      color: #efeae7;
-      font-weight: bold;
-    }
-
-    .btn-primary:hover {
-      background-color: #75616a;
-    }
-
-    .btn-secondary {
-      background-color: transparent;
-      border: 1px solid #cec3c1;
-      color: #efeae7;
-    }
-
-    .btn-secondary:hover {
-      background-color: rgba(206, 195, 193, 0.1);
-    }
-  </style>
 </head>
 <body>
   <!-- Бургер меню -->
