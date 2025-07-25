@@ -271,7 +271,6 @@
   </div>
 
   <script>
-    // Открытие/закрытие бургер-меню
     function openNav() {
       document.getElementById("sidebar").style.width = "250px";
       document.getElementById("main").style.marginLeft = "250px";
@@ -282,19 +281,19 @@
       document.getElementById("main").style.marginLeft = "0";
     }
 
-      // Закрытие при клике вне меню
-  document.addEventListener('click', function(event) {
-    const sidebar = document.getElementById('sidebar');
-    const burgerBtn = document.querySelector('.burger-btn');
-    
-    if (!sidebar.contains(event.target) && event.target !== burgerBtn) {
-      closeNav();
-    }
-
-    // Выход из системы
     function logout() {
-      localStorage.removeItem('currentUser');
-    }
+      localStorage.removeItem('authToken'); // если используете токены
+      window.location.href = "index.html";
+}
+
+    // Закрываем меню при клике вне его области
+    document.addEventListener('click', function(event) {
+      const sidebar = document.getElementById('sidebar');
+      const burgerBtn = document.querySelector('.burger-btn');
+      
+      if (!sidebar.contains(event.target) && event.target !== burgerBtn) {
+        closeNav();
+      }
 
     // Редактирование названия чата
     function editChatTitle() {
