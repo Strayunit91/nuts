@@ -1,61 +1,50 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Creative Assistant</title>
-  <link rel="stylesheet" href="app.css">
+   <link rel="stylesheet" href="styles.css">
+   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <!-- Главное меню -->
-  <div id="mainMenu" class="screen">
-    <span class="burger-btn" onclick="openNav()">&#9776;</span>
-    <div class="main-content">
-      <button class="menu-btn btn-primary" onclick="showScreen('newChat')">НОВЫЙ ЧАТ</button>
-      <button class="menu-btn btn-secondary" onclick="showScreen('myChats')">МОИ ЧАТЫ</button>
-    </div>
-  </div>
+  <div class="container">
+    <img src="logo1.png" alt="logo" class="logo" />
 
-  <!-- Мои чаты -->
-  <div id="myChats" class="screen hidden">
-    <span class="burger-btn" onclick="openNav()">&#9776;</span>
-    <div class="chats-container">
-      <h2>Мои чаты</h2>
-      <div class="controls">
-        <input type="text" id="searchInput" class="search-input" placeholder="Поиск по чатам..." />
-        <button class="sort-btn" onclick="sortChats('date')">По дате</button>
-        <button class="sort-btn" onclick="sortChats('title')">По названию</button>
-      </div>
-      <ul id="chatList" class="chat-list"></ul>
-      <div id="noChats" class="no-chats hidden">Чатов не найдено</div>
-      <button class="back-btn" onclick="showScreen('mainMenu')">←</button>
+    <div id="login-form">
+      <input type="text" placeholder="E-mail или телефон" id="login-user" />
+      <input type="password" placeholder="Пароль" id="login-password" />
+      <button class="btn-primary" onclick="login()">ВОЙТИ</button>
+      <button class="btn-secondary" onclick="showRegistration()">Регистрация</button>
     </div>
-  </div>
 
-  <!-- Новый чат -->
-  <div id="newChat" class="screen hidden">
-    <span class="burger-btn" onclick="openNav()">&#9776;</span>
-    <div class="chat-container">
-      <div class="chat-header">
-        <img src="logo1.png" class="avatar" />
-        <div class="model-info">
-          <div class="model-name">Creative Assistant</div>
-          <div class="model-status">online</div>
-        </div>
-      </div>
-      <div class="chat-title-container">
-        <input type="text" class="chat-title" id="chatTitleInput" value="Новый чат 1" />
-        <span class="edit-icon icon" onclick="editChatTitle()">edit</span>
-      </div>
-      <div class="messages-container" id="messagesContainer"></div>
-      <div class="input-container">
-        <button class="attach-btn icon" onclick="attachFile()">add</button>
-        <input type="text" class="message-input" id="messageInput" placeholder="Напишите сообщение..." />
-        <button class="send-btn icon" onclick="sendMessage()">send</button>
-      </div>
+<p style="color: #75616a;">Не помнишь пароль? <span id="recoverLink" style="color: #efeae7; cursor: pointer;">Восстановить</span></p>
+
+    <div id="register-form" class="hidden">
+      <input type="text" placeholder="Имя пользователя" id="reg-name" />
+      <input type="text" placeholder="Телефон" id="reg-phone" />
+      <input type="email" placeholder="E-mail" id="reg-email" />
+      <input type="password" placeholder="Придумай пароль" id="reg-password" />
+      <input type="password" placeholder="Повтори пароль" id="reg-password-repeat" />
+      <button class="btn-primary" onclick="register()">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+      <button class="btn-secondary" onclick="showLogin()">Назад</button>
     </div>
-  </div>
 
-  <script src="app.js"></script>
+    <div id="recoverySection" style="display: none;">
+      <h3>Восстановление пароля</h3>
+      <label for="recoveryPhone">Номер телефона:</label>
+      <input type="tel" id="recoveryPhone" name="recoveryPhone" placeholder="+375XXXXXXXXX">
+      <button onclick="sendRecoveryCode()">Отправить код</button>
+      <br><br>
+      <label for="recoveryCode">Код из СМС:</label>
+      <input type="text" id="recoveryCode" name="recoveryCode" placeholder="123456">
+      <button onclick="verifyRecoveryCode()">Войти</button>
+      <br><br>
+       <button onclick="goBackToLogin()">Назад</button>
+    </div>
+ </div>
+  
+  <script src="scripts.js"></script>
 </body>
 </html>
