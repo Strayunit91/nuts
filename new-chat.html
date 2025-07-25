@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Новый чат | Creative Assistant</title>
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(to bottom, #2d253c, #0f080f);
+      --primary-color: #4b3d4c;
+      --text-color: #efeae7;
+      --secondary-text: #cec3c1;
+      --input-bg: rgba(75, 61, 76, 0.3);
+      --border-color: #4b3d4c;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      font-family: sans-serif;
+      margin: 0;
+      height: 100vh;
+      color: var(--text-color);
+    }
+
+    /* Бургер меню */
+    .sidebar {
+      width: 0;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #1a1426;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+      z-index: 100;
+    }
+
+    .sidebar a {
+      padding: 15px 25px;
+      text-decoration: none;
+      font-size: 16px;
+      color: var(--secondary-text);
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      color: var(--text-color);
+      background-color: var(--primary-color);
+    }
+
+    .sidebar .logout {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+      color: var(--secondary-text);
+      cursor: pointer;
+    }
+
+    .burger-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 30px;
+      cursor: pointer;
+      color: var(--secondary-text);
+      z-index: 10;
+    }
+
+    /* Основной контент */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      margin-left: 0;
+      transition: margin-left 0.5s;
+    }
+
+    /* Шапка чата */
+    .chat-header {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      background-color: var(--secondary-text);
+      margin-right: 15px;
+    }
+
+    .model-info {
+      flex-grow: 1;
+    }
+
+    .model-name {
+      font-weight: bold;
+      margin-bottom: 3px;
+    }
+
+    .model-status {
+      font-size: 12px;
+      color: var(--secondary-text);
+    }
+
+    /* Название чата */
+    .chat-title-container {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .chat-title {
+      flex-grow: 1;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 5px;
+      border: none;
+      background: transparent;
+      color: var(--text-color);
+    }
+
+    .edit-icon {
+      color: var(--secondary-text);
+      cursor: pointer;
+      margin-left: 10px;
+      font-size: 16px;
+    }
+
+    /* Область сообщений */
+    .messages-container {
+      flex-grow: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Поле ввода */
+    .input-container {
+      display: flex;
+      padding: 15px;
+      border-top: 1px solid var(--border-color);
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .attach-btn {
+      background: none;
+      border: none;
+      color: var(--secondary-text);
+      font-size: 20px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .message-input {
+      flex-grow: 1;
+      padding: 12px 15px;
+      border-radius: 20px;
+      border: none;
+      background-color: var(--input-bg);
+      color: var(--text-color);
+      font-size: 16px;
+    }
+
+    .voice-btn, .send-btn {
+      background: none;
+      border: none;
+      color: var(--secondary-text);
+      font-size: 20px;
+      cursor: pointer;
+      margin-left: 10px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+.send-btn {
+      background-color: var(--primary-color);
+      color: var(--text-color);
+    }
+
+    /* Иконки (можно заменить на свои) */
+    .icon {
+      font-family: 'Material Icons';
+      font-size: 24px;
+    }
+
+    /* Адаптация */
+    @media (max-width: 600px) {
+      .avatar {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <!-- Бургер меню -->
+  <div id="sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
+    <a href="main-menu.html">Главное меню</a>
+    <a href="my-chats.html">Мои чаты</a>
+    <a href="#">Мой профиль</a>
+    <a href="#">Создать личность</a>
+    <a href="#">Разрешения</a>
+    <a href="index.html" class="logout" onclick="logout()">Выйти</a>
+  </div>
+
+  <!-- Основной контент -->
+  <div class="chat-container" id="main">
+    <span class="burger-btn" onclick="openNav()">&#9776;</span>
+    
+    <!-- Шапка чата -->
+    <div class="chat-header">
+      <img src="logo1.png" alt="Аватар" class="avatar" id="chatAvatar">
+      <div class="model-info">
+        <div class="model-name" id="modelName">Creative Assistant</div>
+        <div class="model-status">online</div>
+      </div>
+    </div>
+    
+    <!-- Название чата -->
+    <div class="chat-title-container">
+      <input type="text" class="chat-title" value="Новый чат 1" id="chatTitleInput">
+      <span class="edit-icon icon" onclick="editChatTitle()">edit</span>
+    </div>
+    
+    <!-- Область сообщений -->
+    <div class="messages-container" id="messagesContainer">
+      <!-- Сообщения будут добавляться здесь -->
+    </div>
+    
+    <!-- Поле ввода -->
+    <div class="input-container">
+      <button class="attach-btn icon" onclick="attachFile()">add</button>
+      <input type="text" class="message-input" placeholder="Напишите сообщение..." id="messageInput">
+      <button class="voice-btn icon" onclick="startVoiceInput()">mic</button>
+      <button class="send-btn icon" onclick="sendMessage()">send</button>
+    </div>
+  </div>
+
+  <script>
+    // Открытие/закрытие бургер-меню
+    function openNav() {
+      document.getElementById("sidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+      document.getElementById("sidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+    }
+
+    // Выход из системы
+    function logout() {
+      localStorage.removeItem('currentUser');
+    }
+
+    // Редактирование названия чата
+    function editChatTitle() {
+      const input = document.getElementById('chatTitleInput');
+      input.focus();
+      input.select();
+    }
+
+    // Отправка сообщения
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const message = input.value.trim();
+      
+      if (message) {
+        addMessage(message, 'user');
+        input.value = '';
+        
+        // Имитация ответа (в реальном приложении будет запрос к API)
+        setTimeout(() => {
+          addMessage("Это автоматический ответ. В реальном приложении здесь будет ответ от модели.", 'bot');
+        }, 1000);
+      }
+    }
+
+    // Добавление сообщения в чат
+    function addMessage(text, sender) {
+      const container = document.getElementById('messagesContainer');
+      const messageDiv = document.createElement('div');
+      
+      messageDiv.style.marginBottom = '15px';
+      messageDiv.style.padding = '10px 15px';
+      messageDiv.style.borderRadius = '15px';
+      messageDiv.style.maxWidth = '80%';
+      messageDiv.style.wordBreak = 'break-word';
+      
+      if (sender === 'user') {
+        messageDiv.style.backgroundColor = 'var(--primary-color)';
+
+messageDiv.style.marginLeft = 'auto';
+      } else {
+        messageDiv.style.backgroundColor = 'var(--input-bg)';
+        messageDiv.style.marginRight = 'auto';
+      }
+      
+      messageDiv.textContent = text;
+      container.appendChild(messageDiv);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    // Прикрепление файла
+    function attachFile() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*, .pdf, .doc, .docx';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          addMessage(Файл: ${file.name} (${(file.size / 1024).toFixed(1)} KB), 'user');
+        }
+      };
+      input.click();
+    }
+
+    // Голосовой ввод
+    function startVoiceInput() {
+      alert("Голосовой ввод будет работать в реальном приложении с Web Speech API");
+    }
+
+    // Загрузка данных (аватар, имя модели)
+    document.addEventListener('DOMContentLoaded', () => {
+      // Проверка авторизации
+      if (!localStorage.getItem('currentUser')) {
+        window.location.href = "index.html";
+      }
+      
+      // Загрузка настроек личности
+      const personality = JSON.parse(localStorage.getItem('personality')) || {};
+      if (personality.avatar) {
+        document.getElementById('chatAvatar').src = personality.avatar;
+      }
+      if (personality.name) {
+        document.getElementById('modelName').textContent = personality.name;
+      }
+      
+      // Генерация номера чата
+      const chatCount = localStorage.getItem('chatCount') || 1;
+      document.getElementById('chatTitleInput').value = Новый чат ${chatCount};
+      
+      // Отправка сообщения по Enter
+      document.getElementById('messageInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          sendMessage();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
