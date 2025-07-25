@@ -1,10 +1,14 @@
 
-body {
-  background: linear-gradient(to bottom, #2d253c, #0f080f);
-  font-family: sans-serif;
-  margin: 0;
-  color: #efeae7;
-}
+    body {
+      background: linear-gradient(to bottom, #2d253c, #0f080f);
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+      
 .hidden { display: none; }
 .screen { padding: 20px; min-height: 100vh; }
 .burger-btn {
