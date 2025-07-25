@@ -7,15 +7,24 @@
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
-  <!-- Главное меню -->
-  <div id="mainMenu" class="screen">
-    <span class="burger-btn" onclick="openNav()">&#9776;</span>
-    <div class="main-content">
-      <button class="menu-btn btn-primary" onclick="showScreen('newChat')">НОВЫЙ ЧАТ</button>
-      <button class="menu-btn btn-secondary" onclick="showScreen('myChats')">МОИ ЧАТЫ</button>
-    </div>
-  </div>
+  <!-- Бургер меню -->
+  <div id="sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
+    <a href="my-profile.html">Мой профиль</a>
+    <a href="personality.html">Создать личность</a>
+    <a href="permissions.html">Разрешения</a>
+    <a href="settings.html">Настройки</a>
+    <a href="index.html">Выйти</a>
+      </div>
 
+  <!-- Основное содержимое -->
+  <div class="main-content" id="main">
+    <span class="burger-btn" onclick="openNav()">&#9776;</span>
+    
+    <button class="menu-btn btn-primary" onclick="newChat()">НОВЫЙ ЧАТ</button>
+    <button class="menu-btn btn-secondary" onclick="navigateToChats()">МОИ ЧАТЫ</button>
+
+  </div>
   <!-- Мои чаты -->
   <div id="myChats" class="screen hidden">
     <span class="burger-btn" onclick="openNav()">&#9776;</span>
