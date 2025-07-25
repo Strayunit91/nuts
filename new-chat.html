@@ -282,6 +282,15 @@
       document.getElementById("main").style.marginLeft = "0";
     }
 
+      // Закрытие при клике вне меню
+  document.addEventListener('click', function(event) {
+    const sidebar = document.getElementById('sidebar');
+    const burgerBtn = document.querySelector('.burger-btn');
+    
+    if (!sidebar.contains(event.target) && event.target !== burgerBtn) {
+      closeNav();
+    }
+
     // Выход из системы
     function logout() {
       localStorage.removeItem('currentUser');
