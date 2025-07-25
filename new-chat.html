@@ -276,23 +276,118 @@
     </div>
   </div>
 
-  <script>
-    function openNav() {
-      document.getElementById("sidebar").style.width = "250px";
-      document.getElementById("main").style.marginLeft = "250px";
-    }
+<script>
+  // Работа бургер-меню
+  function openNav() {
+    document.getElementById("sidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+  }
 
-    function closeNav() {
-      document.getElementById("sidebar").style.width = "0";
-      document.getElementById("main").style.marginLeft = "0";
-    }
+  function closeNav() {
+    document.getElementById("sidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+  }
 
-    function logout() {
-      localStorage.removeItem('authToken'); // если используете токены
+  // Выход из системы
+  function logout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = "index.html";
+  }
+
+  // Редактирование названия чата
+  function editChatTitle() {
+    const input = document.getElementById('chatTitleInput');
+    input.focus();
+    input.select();
+  }
+
+  // Отправка сообщения
+  function sendMessage() {
+    const input = document.getElementById('messageInput');
+    const message = input.value.trim();
+    
+    if (message) {
+      addMessage(message, 'user');
+      input.value = '';
+      
+      // Имитация ответа
+      setTimeout(() => {
+        addMessage("Это автоматический ответ. В реальном приложении здесь будет ответ от модели.", 'bot');
+      }, 1000);
+    }
+  }
+
+  // Добавление сообщения в чат
+  function addMessage(text, sender) {
+    const container = document.getElementById('messagesContainer');
+    const messageDiv = document.createElement('div');
+    
+    messageDiv.style.marginBottom = '15px';
+    messageDiv.style.padding = '10px 15px';
+    messageDiv.style.borderRadius = '15px';
+    messageDiv.style.maxWidth = '80%';
+    messageDiv.style.wordBreak = 'break-word';
+    
+    if (sender === 'user') {
+      messageDiv.style.backgroundColor = 'var(--primary-color)';
+      messageDiv.style.marginLeft = 'auto';
+    } else {
+      messageDiv.style.backgroundColor = 'var(--input-bg)';
+      messageDiv.style.marginRight = 'auto';
+    }
+    
+    messageDiv.textContent = text;
+    container.appendChild(messageDiv);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  // Прикрепление файла
+  function attachFile() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*, .pdf, .doc, .docx';
+    input.onchange = function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        addMessage(Файл: ${file.name} (${(file.size / 1024).toFixed(1)} KB), 'user');
+      }
+    };
+    input.click();
+  }
+
+  // Голосовой ввод
+  function startVoiceInput() {
+    alert("Голосовой ввод будет работать в реальном приложении с Web Speech API");
+  }
+
+  // Загрузка данных при открытии страницы
+  document.addEventListener('DOMContentLoaded', function() {
+    // Проверка авторизации
+    if (!localStorage.getItem('currentUser')) {
       window.location.href = "index.html";
-}
+    }
+    
+    // Загрузка настроек личности
+    const personality = JSON.parse(localStorage.getItem('personality')) || {};
+    if (personality.avatar) {
+      document.getElementById('chatAvatar').src = personality.avatar;
+    }
+    if (personality.name) {
+      document.getElementById('modelName').textContent = personality.name;
+    }
+    
+    // Генерация номера чата
+    const chatCount = localStorage.getItem('chatCount') || 1;
+    document.getElementById('chatTitleInput').value = Новый чат ${chatCount};
+    
+    // Отправка сообщения по Enter
+    document.getElementById('messageInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
 
-    // Закрываем меню при клике вне его области
+    // Закрытие меню при клике вне его
     document.addEventListener('click', function(event) {
       const sidebar = document.getElementById('sidebar');
       const burgerBtn = document.querySelector('.burger-btn');
@@ -300,101 +395,8 @@
       if (!sidebar.contains(event.target) && event.target !== burgerBtn) {
         closeNav();
       }
-
-    // Редактирование названия чата
-    function editChatTitle() {
-      const input = document.getElementById('chatTitleInput');
-      input.focus();
-      input.select();
-    }
-
-    // Отправка сообщения
-    function sendMessage() {
-      const input = document.getElementById('messageInput');
-      const message = input.value.trim();
-      
-      if (message) {
-        addMessage(message, 'user');
-        input.value = '';
-        
-        // Имитация ответа (в реальном приложении будет запрос к API)
-        setTimeout(() => {
-          addMessage("Это автоматический ответ. В реальном приложении здесь будет ответ от модели.", 'bot');
-        }, 1000);
-      }
-    }
-
-    // Добавление сообщения в чат
-    function addMessage(text, sender) {
-      const container = document.getElementById('messagesContainer');
-      const messageDiv = document.createElement('div');
-      
-      messageDiv.style.marginBottom = '15px';
-      messageDiv.style.padding = '10px 15px';
-      messageDiv.style.borderRadius = '15px';
-      messageDiv.style.maxWidth = '80%';
-      messageDiv.style.wordBreak = 'break-word';
-      
-      if (sender === 'user') {
-        messageDiv.style.backgroundColor = 'var(--primary-color)';
-
-messageDiv.style.marginLeft = 'auto';
-      } else {
-        messageDiv.style.backgroundColor = 'var(--input-bg)';
-        messageDiv.style.marginRight = 'auto';
-      }
-      
-      messageDiv.textContent = text;
-      container.appendChild(messageDiv);
-      container.scrollTop = container.scrollHeight;
-    }
-
-    // Прикрепление файла
-    function attachFile() {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'image/*, .pdf, .doc, .docx';
-      input.onchange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          addMessage(Файл: ${file.name} (${(file.size / 1024).toFixed(1)} KB), 'user');
-        }
-      };
-      input.click();
-    }
-
-    // Голосовой ввод
-    function startVoiceInput() {
-      alert("Голосовой ввод будет работать в реальном приложении с Web Speech API");
-    }
-
-    // Загрузка данных (аватар, имя модели)
-    document.addEventListener('DOMContentLoaded', () => {
-      // Проверка авторизации
-      if (!localStorage.getItem('currentUser')) {
-        window.location.href = "index.html";
-      }
-      
-      // Загрузка настроек личности
-      const personality = JSON.parse(localStorage.getItem('personality')) || {};
-      if (personality.avatar) {
-        document.getElementById('chatAvatar').src = personality.avatar;
-      }
-      if (personality.name) {
-        document.getElementById('modelName').textContent = personality.name;
-      }
-      
-      // Генерация номера чата
-      const chatCount = localStorage.getItem('chatCount') || 1;
-      document.getElementById('chatTitleInput').value = Новый чат ${chatCount};
-      
-      // Отправка сообщения по Enter
-      document.getElementById('messageInput').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          sendMessage();
-        }
-      });
     });
-  </script>
+  });
+</script>
 </body>
 </html>
