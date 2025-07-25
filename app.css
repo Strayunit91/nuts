@@ -1,0 +1,26 @@
+
+body {
+  background: linear-gradient(to bottom, #2d253c, #0f080f);
+  font-family: sans-serif;
+  margin: 0;
+  color: #efeae7;
+}
+.hidden { display: none; }
+.screen { padding: 20px; min-height: 100vh; }
+.burger-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 10;
+}
+.menu-btn, .sort-btn, .back-btn, .send-btn, .attach-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  margin: 5px;
+}
+.btn-primary { background-color: #4b3d4c; color: #efeae7; }
+.btn-secondary { background-color: transparent; color: #efeae7; border: 1px solid #cec3c1; }
+.chat-container, .chats-container { margin-left: 40px; }
