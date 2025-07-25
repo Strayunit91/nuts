@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Мои чаты | Creative Assistant</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #2d253c, #0f080f);
+      font-family: sans-serif;
+      margin: 0;
+      height: 100vh;
+      color: #efeae7;
+    }
+
+    /* Общие стили как в main-menu */
+    .sidebar {
+      width: 0;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #1a1426;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+      z-index: 100;
+    }
+
+    .sidebar a {
+      padding: 15px 25px;
+      text-decoration: none;
+      font-size: 16px;
+      color: #cec3c1;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      color: #efeae7;
+      background-color: #2d253c;
+    }
+
+    .sidebar .logout {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      border-top: 1px solid #4b3d4c;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+      color: #cec3c1;
+      cursor: pointer;
+    }
+
+    .burger-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 30px;
+      cursor: pointer;
+      color: #cec3c1;
+      z-index: 10;
+    }
+
+    /* Стили для списка чатов */
+    .chats-container {
+      width: 90%;
+      max-width: 600px;
+      margin: 70px auto 20px;
+    }
+
+    /* Стили для поиска и сортировки */
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .search-input {
+      flex-grow: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background-color: rgba(75, 61, 76, 0.3);
+      color: #efeae7;
+      font-size: 12px;
+    }
+
+    .sort-btn {
+      padding: 12px;
+      background-color: #4b3d4c;
+      color: #efeae7;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: 0.3s;
+    }
+
+    .sort-btn:hover {
+      background-color: #5a4a5b;
+    }
+
+    .chat-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .chat-item {
+      background-color: rgba(75, 61, 76, 0.3);
+      border-radius: 10px;
+      margin-bottom: 15px;
+      padding: 15px;
+      transition: 0.3s;
+      border-left: 3px solid #4b3d4c;
+    }
+
+    .chat-item:hover {
+      background-color: rgba(75, 61, 76, 0.5);
+      transform: translateX(5px);
+    }
+
+    .chat-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #cec3c1;
+    }
+
+    .chat-preview {
+      font-size: 14px;
+      color: #75616a;
+      margin-bottom: 5px;
+    }
+
+    .chat-date {
+      font-size: 12px;
+      color: #4b3d4c;
+      text-align: right;
+    }
+
+    .back-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #4b3d4c;
+      color: #efeae7;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .no-chats {
+      text-align: center;
+      color: #75616a;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+  
+<body>
+  <!-- Бургер меню -->
+  <div id="sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
+    <a href="main-menu.html">Главное меню</a>
+    <a href="#">Мой профиль</a>
+    <a href="#">Создать личность</a>
+    <a href="#">Разрешения</a>
+    <a href="index.html" class="logout" onclick="logout()">Выйти</a>
+  </div>
+
+  <!-- Основное содержимое -->
+  <div class="chats-container" id="main">
+    <span class="burger-btn" onclick="openNav()">&#9776;</span>
+    
+    <h2 style="color: #cec3c1; margin-bottom: 20px;">Мои чаты</h2>
+
+<!-- Блок поиска и сортировки -->
+    <div class="controls">
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Поиск по чатам..." 
+        id="searchInput"
+      >
+      <button class="sort-btn" id="sortDateBtn">По дате ↓</button>
+      <button class="sort-btn" id="sortNameBtn">По названию</button>
+    </div>
+    
+    <ul class="chat-list" id="chatList">
+      <!-- Чаты будут добавляться здесь через JavaScript -->
+    </ul>
+    
+    <div class="no-chats hidden" id="noChats">Чатов не найдено</div>
+  </div>
+
+  <button class="back-btn" onclick="window.location.href='main-menu.html'">←</button>
+
+  <script>
+    // Открытие/закрытие бургер-меню
+    function openNav() {
+      document.getElementById("sidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+      document.getElementById("sidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+    }
+
+    // Выход из системы
+    function logout() {
+      localStorage.removeItem('currentUser');
+    }
+
+    // Данные чатов (можно заменить на загрузку из localStorage)
+    let chats = [
+      { 
+        id: 1, 
+        title: "Обсуждение нового проекта", 
+        preview: "Привет! Как продвигается работа над дизайном?", 
+        date: "2023-05-26",
+        timestamp: new Date("2023-05-26").getTime()
+      },
+      { 
+        id: 2, 
+        title: "Техническая поддержка", 
+        preview: "Ваш запрос был решён. Нужна ещё помощь?", 
+        date: "2023-05-24",
+        timestamp: new Date("2023-05-24").getTime()
+      },
+      { 
+        id: 3, 
+        title: "Идеи для улучшения", 
+        preview: "Можно добавить тёмную тему и новые шрифты...", 
+        date: "2023-05-20",
+        timestamp: new Date("2023-05-20").getTime()
+      }
+    ];
+
+    // Текущая сортировка
+    let currentSort = { field: 'date', ascending: false };
+
+    // Загрузка чатов
+    function renderChats() {
+      const chatList = document.getElementById('chatList');
+      const noChats = document.getElementById('noChats');
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      
+      // Фильтрация по поиску
+      let filteredChats = chats.filter(chat => 
+        chat.title.toLowerCase().includes(searchTerm) || 
+        chat.preview.toLowerCase().includes(searchTerm)
+      );
+      
+      // Сортировка
+      filteredChats.sort((a, b) => {
+        if (currentSort.field === 'date') {
+          return currentSort.ascending 
+            ? a.timestamp - b.timestamp 
+            : b.timestamp - a.timestamp;
+        } else {
+          return currentSort.ascending
+            ? a.title.localeCompare(b.title)
+            : b.title.localeCompare(a.title);
+        }
+      });
+      
+      // Очистка списка
+      chatList.innerHTML = '';
+      
+      // Добавление чатов
+      if (filteredChats.length === 0) {
+        noChats.classList.remove('hidden');
+      } else {
+        noChats.classList.add('hidden');
+        filteredChats.forEach(chat => {
+          const chatItem = document.createElement('li');
+          chatItem.className = 'chat-item';
+          chatItem.innerHTML = 
+            <div class="chat-title">${chat.title}</div>
+            <div class="chat-preview">${chat.preview}</div>
+            <div class="chat-date">${chat.date}</div>
+          ;
+          chatItem.onclick = () => openChat(chat.id);
+          chatList.appendChild(chatItem);
+        });
+      }
+    }
+
+    // Открытие чата
+    function openChat(chatId) {
+      alert(Открываем чат #${chatId});
+      // window.location.href = chat.html?id=${chatId};
+    }
+
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', () => {
+      renderChats();
+      
+      // Поиск
+
+document.getElementById('searchInput').addEventListener('input', renderChats);
+      
+      // Сортировка по дате
+      document.getElementById('sortDateBtn').addEventListener('click', () => {
+        currentSort = { 
+          field: 'date', 
+          ascending: !currentSort.ascending 
+        };
+        document.getElementById('sortDateBtn').textContent = 
+          По дате ${currentSort.ascending ? '↑' : '↓'};
+        document.getElementById('sortNameBtn').textContent = 'По названию';
+        renderChats();
+      });
+      
+      // Сортировка по названию
+      document.getElementById('sortNameBtn').addEventListener('click', () => {
+        currentSort = { 
+          field: 'title', 
+          ascending: !currentSort.ascending 
+        };
+        document.getElementById('sortNameBtn').textContent = 
+          По названию ${currentSort.ascending ? '↑' : '↓'};
+        document.getElementById('sortDateBtn').textContent = 'По дате';
+        renderChats();
+      });
+    });
+
+    // Сохранение в localStorage (пример для новых чатов)
+    function saveChats() {
+      localStorage.setItem('chats', JSON.stringify(chats));
+    }
+  </script>
+</body>
+</html>
