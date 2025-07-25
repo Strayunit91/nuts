@@ -1,74 +1,61 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Creative Assistant</title>
-   <link rel="stylesheet" href="styles.css">
-   <link rel="stylesheet" href="index.css">
-
-  <script>
-  // Проверяем, есть ли данные пользователя
-  if (!localStorage.getItem('user')) {
-    window.location.href = "index.html";
-  }
-</script>
-  
+  <link rel="stylesheet" href="app.css">
 </head>
 <body>
-  <!-- Бургер меню -->
-  <div id="sidebar" class="sidebar">
-    <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
-    <a href="my-profile.html">Мой профиль</a>
-    <a href="personality.html">Создать личность</a>
-    <a href="permissions.html">Разрешения</a>
-    <a href="settings.html">Настройки</a>
-    <a href="index.html">Выйти</a>
-      </div>
-
-  <!-- Основное содержимое -->
-  <div class="main-content" id="main">
+  <!-- Главное меню -->
+  <div id="mainMenu" class="screen">
     <span class="burger-btn" onclick="openNav()">&#9776;</span>
-    
-    <button class="menu-btn btn-primary" onclick="newChat()">НОВЫЙ ЧАТ</button>
-    <button class="menu-btn btn-secondary" onclick="navigateToChats()">МОИ ЧАТЫ</button>
-
+    <div class="main-content">
+      <button class="menu-btn btn-primary" onclick="showScreen('newChat')">НОВЫЙ ЧАТ</button>
+      <button class="menu-btn btn-secondary" onclick="showScreen('myChats')">МОИ ЧАТЫ</button>
+    </div>
   </div>
 
-  <script>
-    function openNav() {
-      document.getElementById("sidebar").style.width = "250px";
-      document.getElementById("main").style.marginLeft = "250px";
-    }
+  <!-- Мои чаты -->
+  <div id="myChats" class="screen hidden">
+    <span class="burger-btn" onclick="openNav()">&#9776;</span>
+    <div class="chats-container">
+      <h2>Мои чаты</h2>
+      <div class="controls">
+        <input type="text" id="searchInput" class="search-input" placeholder="Поиск по чатам..." />
+        <button class="sort-btn" onclick="sortChats('date')">По дате</button>
+        <button class="sort-btn" onclick="sortChats('title')">По названию</button>
+      </div>
+      <ul id="chatList" class="chat-list"></ul>
+      <div id="noChats" class="no-chats hidden">Чатов не найдено</div>
+      <button class="back-btn" onclick="showScreen('mainMenu')">←</button>
+    </div>
+  </div>
 
-    function closeNav() {
-      document.getElementById("sidebar").style.width = "0";
-      document.getElementById("main").style.marginLeft = "0";
-    }
+  <!-- Новый чат -->
+  <div id="newChat" class="screen hidden">
+    <span class="burger-btn" onclick="openNav()">&#9776;</span>
+    <div class="chat-container">
+      <div class="chat-header">
+        <img src="logo1.png" class="avatar" />
+        <div class="model-info">
+          <div class="model-name">Creative Assistant</div>
+          <div class="model-status">online</div>
+        </div>
+      </div>
+      <div class="chat-title-container">
+        <input type="text" class="chat-title" id="chatTitleInput" value="Новый чат 1" />
+        <span class="edit-icon icon" onclick="editChatTitle()">edit</span>
+      </div>
+      <div class="messages-container" id="messagesContainer"></div>
+      <div class="input-container">
+        <button class="attach-btn icon" onclick="attachFile()">add</button>
+        <input type="text" class="message-input" id="messageInput" placeholder="Напишите сообщение..." />
+        <button class="send-btn icon" onclick="sendMessage()">send</button>
+      </div>
+    </div>
+  </div>
 
-    function newChat() {
-      window.location.href = "new-chat.html";
-    }
-
-    function navigateToChats() {
-      window.location.href = "my-chats.html";
-    }
-
-    function logout() {
-      localStorage.removeItem('authToken'); // если используете токены
-      window.location.href = "index.html";
-}
-
-    // Закрываем меню при клике вне его области
-    document.addEventListener('click', function(event) {
-      const sidebar = document.getElementById('sidebar');
-      const burgerBtn = document.querySelector('.burger-btn');
-      
-      if (!sidebar.contains(event.target) && event.target !== burgerBtn) {
-        closeNav();
-      }
-    });
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
