@@ -8,7 +8,16 @@
       height: 100vh;
       margin: 0;
     }
-      
+
+    .container {
+      width: 90%;
+      max-width: 320px;
+      background-color: transparent;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
 .hidden { display: none; }
 .screen { padding: 20px; min-height: 100vh; }
 .burger-btn {
